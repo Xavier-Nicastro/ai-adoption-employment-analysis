@@ -80,3 +80,21 @@ FROM ai_jobs
 GROUP BY industry, ai_band
 ORDER BY industry, avg_salary;
 
+
+# AI intensity and salary by seniority level.
+
+SELECT
+    seniority_level,
+    CASE
+        WHEN ai_intensity_score < 0.2 THEN 'Very Low'
+        WHEN ai_intensity_score < 0.3 THEN 'Low'
+        WHEN ai_intensity_score < 0.4 THEN 'Medium'
+        WHEN ai_intensity_score < 0.5 THEN 'High'
+        ELSE 'Very High'
+    END AS ai_band,
+    ROUND(AVG(salary_usd), 2) AS avg_salary,
+    COUNT(*) AS job_count
+FROM ai_jobs
+GROUP BY seniority_level, ai_band
+ORDER BY seniority_level, avg_salary;
+
