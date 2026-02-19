@@ -98,3 +98,16 @@ FROM ai_jobs
 GROUP BY seniority_level, ai_band
 ORDER BY seniority_level, avg_salary;
 
+
+# Automation Risk and AI intensity
+
+SELECT
+    CASE
+        WHEN ai_intensity_score >= 0.2873 THEN 'High AI'
+        ELSE 'Low AI'
+    END AS ai_group,
+    ROUND(AVG(automation_risk_score), 3) AS avg_automation_risk,
+    COUNT(*) AS job_count
+FROM ai_jobs
+GROUP BY ai_group;
+
